@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.courseRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const validRequest_1 = __importDefault(require("../../middlewares/validRequest"));
+const Course_controller_1 = require("./Course.controller");
+const Course_validation_1 = require("./Course.validation");
+const auth_1 = __importDefault(require("../../middlewares/auth"));
+const User_constant_1 = require("../User/User.constant");
+const router = express_1.default.Router();
+router.post("/create-course", (0, validRequest_1.default)(Course_validation_1.CourseValidation.CreateCourseValidator), Course_controller_1.CourseController.createCourse);
+router.post("/purchase", (0, auth_1.default)(User_constant_1.USER_ROLE.ADMIN, User_constant_1.USER_ROLE.USER), Course_controller_1.CourseController.purshaseUser);
+router.get("/", Course_controller_1.CourseController.getAllCourses);
+router.get("/:id", Course_controller_1.CourseController.getCourseById);
+router.patch("/:id", (0, validRequest_1.default)(Course_validation_1.CourseValidation.UpdateCourseValidator), Course_controller_1.CourseController.updateCourse);
+router.delete("/:id", Course_controller_1.CourseController.deleteCourse);
+exports.courseRoutes = router;
