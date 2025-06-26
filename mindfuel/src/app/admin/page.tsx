@@ -26,6 +26,7 @@ import {
 } from "@/services/CourseServices";
 import CourseFormDialog from "@/components/admin/CourseFormDialog";
 import Loader from "@/components/shared/Loader";
+import SkeletonLoader from "@/components/shared/SkeletonLoader";
 
 export default function AdminDashboard() {
   const { user, logOut } = useAuth();
@@ -144,10 +145,6 @@ export default function AdminDashboard() {
     setDialogOpen(true);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
       {/* Navigation */}
@@ -187,15 +184,21 @@ export default function AdminDashboard() {
           </button>
         </div>
 
-        {courses.length === 0 ? (
-          <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 flex items-center justify-center">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
-              <p className="mt-4 text-slate-300">Loading...</p>
-            </div>
+        {isLoading ? (
+          <SkeletonLoader />
+        ) : courses.length === 0 ? (
+          <div className="max-w-2xl mx-auto p-8 bg-slate-800/50 rounded-xl border border-slate-700/50 text-center">
+            <BookOpen className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-white mb-2">
+              No courses available
+            </h3>
+            <p className="text-slate-400">
+              Check back later for new courses, or contact support if you
+              believe this is an error.
+            </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map((course: TCourse) => (
               <div
                 key={course._id}

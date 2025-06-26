@@ -88,21 +88,21 @@ const ModuleList: React.FC<ModuleListProps> = ({
               <div className="flex gap-2">
                 <button
                   onClick={() => onEdit(module._id, module.title)}
-                  className="p-1 text-slate-400 hover:text-blue-400 rounded hover:bg-slate-700/50 transition-colors"
+                  className="cursor-pointer p-1 text-slate-400 hover:text-blue-400 rounded hover:bg-slate-700/50 transition-colors"
                   title="Edit Module"
                 >
                   <Edit className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => onDelete(module._id)}
-                  className="p-1 text-slate-400 hover:text-red-400 rounded hover:bg-slate-700/50 transition-colors"
+                  className="cursor-pointer p-1 text-slate-400 hover:text-red-400 rounded hover:bg-slate-700/50 transition-colors"
                   title="Delete Module"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => onAddLecture(module._id)}
-                  className="flex items-center px-3 py-1 text-sm text-white bg-blue-600/80 hover:bg-blue-500/80 rounded-lg transition-colors"
+                  className="cursor-pointer flex items-center px-3 py-1 text-sm text-white bg-blue-600/80 hover:bg-blue-500/80 rounded-lg transition-colors"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Lecture

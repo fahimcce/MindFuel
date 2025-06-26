@@ -18,6 +18,7 @@ import { staticInstructors, staticReviews } from "@/lib/staticData";
 import { PurchasedCourse, GetSingleCourses } from "@/services/CourseServices";
 import { useAuth } from "@/context/FindUser";
 import { toast } from "sonner";
+import Image from "next/image";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -121,9 +122,11 @@ export default function CourseDetail({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           <div className="lg:col-span-2">
             <div className="aspect-video relative overflow-hidden rounded-xl mb-6 border border-slate-700/50">
-              <img
+              <Image
                 src={course.thumbnail}
                 alt={course.title}
+                width={1280}
+                height={720}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>

@@ -1,15 +1,23 @@
 import axiosInstance from "@/lib/axiosInstance";
-import { TCourse, TCourseReq, TPurchase } from "@/types";
+import { TCourseReq, TPurchase } from "@/types";
 
 export const GetAllCourses = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/course`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Data fetching failed !!");
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/course`, {
+      next: {
+        revalidate: 60 * 3, // 3 minutes stale-while-revalidate
+        tags: ["courses"], // for on-demand revalidation
+      },
+    });
+
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+    const result = await res.json();
+    return result.data;
+  } catch (error) {
+    console.error("Fetching courses failed:", error);
+    throw error;
   }
-  const result = await res.json();
-  return result.data;
 };
 
 export const MyCourses = async () => {

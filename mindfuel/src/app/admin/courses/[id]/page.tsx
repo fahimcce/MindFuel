@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Plus, BookOpen, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useAuth } from "@/context/FindUser";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetSingleCourses } from "@/services/CourseServices";
 import {
@@ -21,11 +20,9 @@ import {
 import ModuleList from "@/components/admin/ModuleList";
 import ModuleDialog from "@/components/admin/ModuleDialog";
 import LectureDialog from "@/components/admin/LectureDialog";
-import { TLecture, TModule } from "@/types";
+import { TLecture } from "@/types";
 
 export default function CourseManagement() {
-  const { user } = useAuth();
-  const router = useRouter();
   const params = useParams();
   const courseId = params.id as string;
 
@@ -77,6 +74,7 @@ export default function CourseManagement() {
       toast.success("Module created successfully!");
       setModuleDialogOpen(false);
       setModuleFormData({ title: "" });
+      window.location.reload();
     },
     onError: () => {
       toast.error("Failed to create module");
@@ -102,6 +100,7 @@ export default function CourseManagement() {
       toast.success("Module updated successfully!");
       setEditingModuleId("");
       setEditModuleTitle("");
+      window.location.reload();
     },
     onError: () => {
       toast.error("Failed to update module");
@@ -298,7 +297,7 @@ export default function CourseManagement() {
               <h2 className="text-2xl font-bold text-white">Modules</h2>
               <button
                 onClick={() => setModuleDialogOpen(true)}
-                className="flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium rounded-lg transition-all duration-300"
+                className="cursor-pointer flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium rounded-lg transition-all duration-300"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Module
